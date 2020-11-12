@@ -11,7 +11,7 @@
 
                 <div class="page-content">
 
-                    <h2>It looks like nothing was found at this location. Maybr try one of the links below or a search?</h2>
+                    <h2>It looks like nothing was found at this location. Maybe try one of the links below or a search?</h2>
 
                     <?php get_search_form(); ?>
 
