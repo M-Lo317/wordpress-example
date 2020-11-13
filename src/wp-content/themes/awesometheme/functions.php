@@ -79,7 +79,6 @@ require get_template_directory() . '/inc/walker.php';
 	 Head function
 	==========================================
 */
-
 function awesome_remove_version() {
 	return ' ';
 }
@@ -122,10 +121,49 @@ function awesome_custom_post_type (){
 			'thumbnail',
 			'revisions',
 		),
-		'taxonomies' => array('category', 'post_tag'),
+		//'taxonomies' => array('category', 'post_tag'),
 		'menu_position' => 5,
 		'exclude_from_search' => false
 	);
 	register_post_type('portfolio',$args);
 }
 add_action('init','awesome_custom_post_type');
+
+function awesome_custom_taxonomies() {
+	
+	//add new taxonomy hierarchical
+	$labels = array(
+		'name' => 'Fields',
+		'singular_name' => 'Field',
+		'search_items' => 'Search Field',
+		'all_items' => 'All Fields',
+		'parent_item' => 'Parent Field',
+		'parent_item_colon' => 'Parent Field:',
+		'edit_item' => 'Edit Field',
+		'update_item' => 'Update Field',
+		'add_new_item' => 'Add New Work Field',
+		'new_item_name' => 'New Field Name',
+		'menu_name' => 'Fields'
+	);
+	
+	$args = array(
+		'hierarchical' => true,
+		'labels' => $labels,
+		'show_ui' => true,
+		'show_admin_column' => true,
+		'query_var' => true,
+		'rewrite' => array( 'slug' => 'field' )
+	);
+	
+	register_taxonomy('field', array('portfolio'), $args);
+	
+	//add new taxonomy NOT hierarchical
+	
+	register_taxonomy('software', 'portfolio', array(
+		'label' => 'Software',
+		'rewrite' => array( 'slug' => 'software' ),
+		'hierarchical' => false
+	) );
+}
+
+add_action( 'init' , 'awesome_custom_taxonomies' );
